@@ -829,7 +829,7 @@
       You're ready to lead. Let's make sure your business is built to support that. Share a little about yourself below and we'll be in touch to schedule your complimentary Discovery Call.
     </p>
 
-    <form onsubmit="handleSubmit(event)">
+    <form action="https://formspree.io/f/mnjbbbqa" method="POST" onsubmit="handleSubmit(event)">
       <div class="form-grid">
         <div class="form-group">
           <label>First Name</label>
@@ -882,12 +882,24 @@
 
 <script>
 function handleSubmit(e) {
+  const form = document.querySelector('form');
+  const formData = new FormData(form);
+  fetch('https://formspree.io/f/mnjbbbqa', {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      form.style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+      setTimeout(function() {
+        window.open('https://calendly.com/hazel-luxxmorvconcierge/30min', '_blank');
+      }, 1500);
+    }
+  }).catch(error => {
+    console.error('Error:', error);
+  });
   e.preventDefault();
-  document.querySelector('form').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
-  setTimeout(function() {
-    window.open('https://calendly.com/hazel-luxxmorvconcierge/30min', '_blank');
-  }, 1500);
 }
 </script>
 
